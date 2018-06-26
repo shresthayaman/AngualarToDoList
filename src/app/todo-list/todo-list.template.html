@@ -1,0 +1,13 @@
+<div ng-controller="todoList">
+    <form name="frm" ng-submit="$ctrl.addToList()">
+        <input type="text" ng-model="input" />
+        <button type="submit" ng-click="addToList()">Add</button>
+    </form>
+    <ul>
+        <li ng-repeat="todo in todos">
+            <input type="checkbox" ng-model="todo.done" />
+            <span ng-class="{'done':todo.done}">{{todo.title}}</span>
+        </li>
+    </ul>
+
+</div>
