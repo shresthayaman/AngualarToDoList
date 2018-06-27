@@ -3,22 +3,39 @@
 // variable to add: todoInput, activeList, completedList
 
 angular.module("todoList", []).component("todoList", {
+  bindings: {},
   controller: TodoListController,
-  contollerAs: "vm",
-  template: "<h1>Hello world<h1>"
-  //templateUrl: "todo-list/todo-list.template.html",
+  templateUrl: "todo-list/todo-list.template.html",
+  controllerAs: "vm"
 });
 
-function TodoListController() {
+function TodoListController($http) {
   let vm = this;
 
-  vn.name = "Yaman";
+  vm.currentInput = "";
+  vm.activeList = [{ task: "Sample Task", completed: false }];
+  vm.completedList = [];
+  vm.addToList = addToList;
+  vm.moveToComplete = moveToComplete;
 
-  // vm.activeList = [{task:"Sample Task", completed:false}];
-  // vm.completedList = [];
-  // vm.addToList = addToList;
-  // vm.moveToComplete = moveToComplete;
+  function addToList() {
+    vm.activeList.push({ task: vm.currentInput, completed: false });
+    vm.currentInput = "";
+  }
 
-  // function addToList()
-  //   vm.activeList.push({title:vm.input, completed: false})
+  function moveToComplete() {
+    vm.completedList = vm.activeList.filter(function(task) {
+      if (task.completed === true) {
+        return task;
+      }
+    });
+
+    vm.activeList = vm.activeList.filter(function(task) {
+      if (task.completed !== true) {
+        return task;
+      }
+    });
+  }
+
+  TodoListController.$inject = ["$http"];
 }
